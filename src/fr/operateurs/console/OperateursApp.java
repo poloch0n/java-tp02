@@ -7,15 +7,15 @@ public class OperateursApp {
 
 	public static void main(String [] args) {
 		// Affichage du premier message
-		System.out.println("*****  Application Opérateurs *****\r\n" + 
-				"Veuillez saisir le premier nombre…");
-		// Récupération du premier nombre taper
+		System.out.println("*****  Application Opï¿½rateurs *****\r\n" + 
+				"Veuillez saisir le premier nombreï¿½");
+		// Rï¿½cupï¿½ration du premier nombre taper
 		
-		int firstNumber = getNumber();
+		float firstNumber = getNumber();
 		// Affichage du deuxieme message
-		System.out.println("Veuillez saisir le second nombre…");
+		System.out.println("Veuillez saisir le second nombreï¿½");
 
-		int secondNumber = getNumber();
+		float secondNumber = getNumber();
 		showOperation(firstNumber,secondNumber,"+");
 
 		showOperation(firstNumber,secondNumber,"-");
@@ -24,10 +24,10 @@ public class OperateursApp {
 		showOperation(firstNumber,secondNumber,"%");
 	}
 	
-	private static void showOperation(int firstNumber, int secondNumber, String string) {
+	private static void showOperation(float firstNumber, float secondNumber, String string) {
 
 		float result = 0 ;
-		
+		String message = "";
 		switch(string) {
 		case "+":
 			result = firstNumber + secondNumber;
@@ -39,21 +39,38 @@ public class OperateursApp {
 			result = firstNumber * secondNumber;
 		      break;
 		case "/":
-			result = firstNumber / secondNumber;
+			if(secondNumber != 0) {
+				result = firstNumber / secondNumber;
+			} else {
+				message = " \r\n you tried to divise by 0 ? really ? nice try";
+			}
+			
 		      break;
 		case "%":
-			result = firstNumber % secondNumber;
+			if(secondNumber != 0) {
+				result = firstNumber % secondNumber;
+			} else {
+				message = " \r\n you tried to get the modulo from 0 ? you either are testing me or pretty d... curious :p";
+			}
 		      break;
 		default: System.out.println("error intern, contact dev");
 		}
 		//show message
-		System.out.println(firstNumber + " " + string + " " + secondNumber + " = " + result);
-	
+		if(message == "") {
+			System.out.println(firstNumber + " " + string + " " + secondNumber + " = " + result);
+		} else {
+			System.out.println(message);
+		};
 	}
 
-	private static int getNumber() {
+	private static float getNumber() {
 		questionUser = new Scanner(System.in);
-		return questionUser.nextInt();
+		try {
+			return questionUser.nextFloat();
+		} catch(Exception e)  {
+			float random =  (float)(int) (Math.random()*100 +1);
+			System.out.println("\r\n you didn't enter a number, we choose "+random+" for you");
+			return random;
+		}
 	}
-	
 }
